@@ -31,16 +31,6 @@ function gameReset() {
   $("#level-title").text(`Press a Key to Start`);
 }
 
-function checkAnswer(levelGame){
-  if(gamePattern[levelGame] === userClickedPattern[levelGame]){
-    if(gamePattern.length === userClickedPattern.length){
-      setTimeout(() => {
-        nextSequence();
-      }, 1000);
-    }
-  }
-}
-
 $(document).keydown(function (e) {
   e.key = e.key.toLowerCase();
   keyDownCount++;
@@ -51,9 +41,9 @@ $(document).keydown(function (e) {
   } else if (keyDownCount > 1) {
     // If 'A' is pressed while game is running, reset the game
     gameReset();
-    $('body').addClass('game-over');
+    $("body").addClass("game-over");
     setTimeout(() => {
-      $('body').removeClass('game-over');
+      $("body").removeClass("game-over");
     }, 200);
     console.log("Game reset by pressing A");
   }
@@ -62,19 +52,20 @@ $(document).keydown(function (e) {
 $(".btn").click(function () {
   userClickedPattern.push(this.id);
   keyDownAnimate(this.id);
-  if(gamePattern[userClickedPattern.length-1] === userClickedPattern[userClickedPattern.length-1]){
-    console.log(gamePattern)
-    console.log(gamePattern[userClickedPattern.length-1]);
-    if(gamePattern.length === userClickedPattern.length){
+  if (
+    gamePattern[userClickedPattern.length - 1] ===
+    userClickedPattern[userClickedPattern.length - 1]
+  ) {
+    if (gamePattern.length === userClickedPattern.length) {
       setTimeout(() => {
         nextSequence();
       }, 1000);
     }
-  } else{
+  } else {
     gameReset();
-    $('body').addClass('game-over');
+    $("body").addClass("game-over");
     setTimeout(() => {
-      $('body').removeClass('game-over');
+      $("body").removeClass("game-over");
     }, 300);
   }
 });
