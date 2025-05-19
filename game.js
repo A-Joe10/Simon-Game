@@ -44,11 +44,11 @@ function gameReset() {
   userClickedPattern = [];
   keyDownCount = 0;
   levelCounter = 0;
-  $("#level-title").text(`Press A Key to Start`);
+  $("#level-title").text(`Click to Start the game`);
 }
 
-$(document).keydown(function (e) {
-  e.key = e.key.toLowerCase();
+$(document).click(function (e) {
+  if (e.target.classList.contains("btn")) return;
   keyDownCount++;
   if (keyDownCount == 1) {
     gameReset();
