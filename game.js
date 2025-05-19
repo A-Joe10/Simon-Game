@@ -12,8 +12,23 @@ function nextSequence() {
   var audio = new Audio(`sounds/${randomChosenColor}.mp3`);
   audio.play();
   $(`#${randomChosenColor}`).fadeOut(120).fadeIn(120).fadeOut(120).fadeIn(120);
+}
+
+function repeatSequence() {
   $("#level-title").text(`Level ${levelCounter + 1}`);
   levelCounter++;
+  let i = 0;
+  const interval = setInterval(() => {
+    if (i >= gamePattern.length) {
+      clearInterval(interval);
+      return;
+    }
+    const color = gamePattern[i];
+    var audio = new Audio(`sounds/${color}.mp3`);
+    audio.play();
+    $(`#${color}`).fadeOut(120).fadeIn(120).fadeOut(120).fadeIn(120);
+    i++;
+  }, 500);
 }
 
 function keyDownAnimate(e) {
@@ -22,13 +37,14 @@ function keyDownAnimate(e) {
     $(`#${e}`).removeClass("pressed");
   }, 100);
 }
+
 function gameReset() {
   started = false;
   gamePattern = [];
   userClickedPattern = [];
   keyDownCount = 0;
   levelCounter = 0;
-  $("#level-title").text(`Press a Key to Start`);
+  $("#level-title").text(`Press A Key to Start`);
 }
 
 $(document).keydown(function (e) {
@@ -36,19 +52,20 @@ $(document).keydown(function (e) {
   keyDownCount++;
   if (keyDownCount == 1) {
     gameReset();
+    $("#level-title").text(`Level ${levelCounter}`);
     nextSequence();
     keyDownCount = 2;
   } else if (keyDownCount > 1) {
-    // If 'A' is pressed while game is running, reset the game
     gameReset();
     $("body").addClass("game-over");
+    $('#correct').removeClass('display');
+    $('#wrong').removeClass('display');
     setTimeout(() => {
       $("body").removeClass("game-over");
     }, 200);
     console.log("Game reset by pressing A");
   }
 });
-
 $(".btn").click(function () {
   userClickedPattern.push(this.id);
   keyDownAnimate(this.id);
@@ -58,14 +75,25 @@ $(".btn").click(function () {
   ) {
     if (gamePattern.length === userClickedPattern.length) {
       setTimeout(() => {
-        nextSequence();
-      }, 1000);
+        $('#correct').addClass('display');
+        $('#correct')[0].play();
+        setTimeout(() => {
+          $('#correct').removeClass('display');
+          setTimeout(() => {
+            repeatSequence();
+          setTimeout(() => {
+            nextSequence();
+          }, gamePattern.length * 500 + 500);
+          }, 500);
+        }, 1000);
+      }, 500);
     }
   } else {
+    $('#wrong').addClass('display');
+    $('#wrong')[0].play();
     gameReset();
-    $("body").addClass("game-over");
     setTimeout(() => {
-      $("body").removeClass("game-over");
-    }, 300);
+      $('#wrong').removeClass('display');
+    }, 2000);
   }
 });

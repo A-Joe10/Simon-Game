@@ -1,22 +1,44 @@
-body {
+html {
   text-align: center;
-  background-color: #011F3F;
+  background-color: #0f355e;
 }
-
+*{
+  box-sizing: border-box;
+}
+.title{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(300px, 1fr));
+  place-items: center;
+  height: 250px;
+}
 #level-title {
   font-family: 'Press Start 2P', cursive;
-  font-size: 3rem;
-  margin:  5%;
+  font-size: 2.4rem;
   color: #FEF2BF;
+  line-height: 1.5;
 }
 
 .container {
   display: block;
   width: 50%;
   margin: auto;
-
+  @media(max-width: 1023px){
+    display: flex;
+  }
 }
-
+video{
+  opacity: 0;
+  /* height: 200px; */
+}
+#wrong{
+  justify-self: flex-end;
+}
+#correct{
+  justify-self: flex-start;
+}
+.display{
+  opacity: 1;
+}
 .btn {
   margin: 25px;
   display: inline-block;
@@ -48,6 +70,5 @@ body {
 }
 
 .pressed {
-  /* box-shadow: 0 0 20px white; */
   background-color: grey;
 }
