@@ -44,7 +44,7 @@ function gameReset() {
   userClickedPattern = [];
   keyDownCount = 0;
   levelCounter = 0;
-  $("#level-title").text(`Click to Start the game`);
+  $("#level-title").text(`click anywhere except the colors`);
 }
 
 $(document).click(function (e) {
@@ -58,8 +58,8 @@ $(document).click(function (e) {
   } else if (keyDownCount > 1) {
     gameReset();
     $("body").addClass("game-over");
-    $('#correct').removeClass('display');
-    $('#wrong').removeClass('display');
+    $("#correct").removeClass("display");
+    $("#wrong").removeClass("display");
     setTimeout(() => {
       $("body").removeClass("game-over");
     }, 200);
@@ -75,25 +75,25 @@ $(".btn").click(function () {
   ) {
     if (gamePattern.length === userClickedPattern.length) {
       setTimeout(() => {
-        $('#correct').addClass('display');
-        $('#correct')[0].play();
+        $("#correct").addClass("display");
+        $("#correct")[0].play();
         setTimeout(() => {
-          $('#correct').removeClass('display');
+          $("#correct").removeClass("display");
           setTimeout(() => {
             repeatSequence();
-          setTimeout(() => {
-            nextSequence();
-          }, gamePattern.length * 500 + 500);
+            setTimeout(() => {
+              nextSequence();
+            }, gamePattern.length * 500 + 500);
           }, 500);
         }, 1000);
       }, 500);
     }
   } else {
-    $('#wrong').addClass('display');
-    $('#wrong')[0].play();
+    $("#wrong").addClass("display");
+    $("#wrong")[0].play();
     gameReset();
     setTimeout(() => {
-      $('#wrong').removeClass('display');
+      $("#wrong").removeClass("display");
     }, 2000);
   }
 });
